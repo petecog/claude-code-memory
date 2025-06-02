@@ -54,11 +54,11 @@
 - **Date**: 2025-02-06
 
 ## Enhanced Logging System
-- **Decision**: Exclude operational logs from git, sync status summaries only
-- **Rationale**: Eliminate log-based conflicts while maintaining cross-machine visibility
-- **Implementation**: Local logs in `logs/` (excluded), status summaries in `status/` (synced)
-- **Benefits**: Clean repository, debugging capability, cross-machine awareness
-- **Date**: 2025-02-06
+- **Decision**: Exclude operational logs and status files from git
+- **Rationale**: Eliminate log-based conflicts, status files are machine-specific operational data
+- **Implementation**: Local logs in `logs/` (excluded), status files in `status/` (excluded)
+- **Benefits**: Clean repository, debugging capability, no sync conflicts
+- **Updated**: 2025-06-02 (changed status files from synced to local-only)
 
 ## Status Tracking Architecture
 - **Decision**: Simple JSON status files without complex dependencies
@@ -66,3 +66,45 @@
 - **Location**: Root-level `status/` directory for easy access
 - **Content**: Last sync time, operation status, file counts, machine metadata
 - **Date**: 2025-02-06
+
+## Logging System Implementation Details
+
+### Decision: Separate stdout/stderr for Function Returns vs User Feedback
+**Date**: June 2, 2025  
+**Context**: Logger functions need to provide both user feedback and return values for chaining
+**Decision**: 
+- User feedback messages go to stderr (`>&2`)
+- Function return values go to stdout
+- Prevents interference when using command substitution
+
+**Rationale**: Bash command substitution captures stdout only, so separating concerns allows functions to both provide immediate feedback AND return usable values.
+
+**Alternative Considered**: Using global variables for return values, but this complicates the API and makes functions less composable.
+
+### Decision: Machine-Specific Status Files are Local-Only
+**Date**: June 2, 2025  
+**Context**: Status tracking files get updated during sync operations, creating git conflicts
+**Decision**: 
+- Add `status/` directory to `.gitignore`
+- Remove existing status files from git tracking
+- Each machine maintains its own local status files
+
+**Rationale**: 
+- Status files are operational metadata, not code or configuration
+- Machine-specific data shouldn't be shared across different machines
+- Prevents perpetual git conflicts during sync operations
+- Maintains operational visibility without git interference
+
+**Alternative Considered**: Stashing/unstashing status files during sync, but this adds complexity and could lose data if operations fail.
+
+## Error Handling Strategy
+
+### Decision: Fail-Fast with Structured Logging
+**Context**: Scripts need reliable error detection and debugging information
+**Decision**: 
+- Use `set -e` for immediate failure on errors
+- Structured logging with timestamps, machine info, and components
+- Status tracking for operational visibility
+- Log rotation to prevent disk space issues
+
+**Rationale**: Immediate failure prevents cascading errors, structured logs aid debugging, status tracking provides operational awareness.

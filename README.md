@@ -61,6 +61,8 @@ cd ~/.claude
 - `todos/` - Session cache (transient)
 - `input/` - File sharing area (transient)
 - `scratch/` - Experimental work
+- `logs/` - Operational logs (local only)
+- `status/` - Machine status files (local only)
 
 ## Repository Structure
 
@@ -81,10 +83,8 @@ cd ~/.claude
 │   ├── merge-to-main.sh        # Branch merge assistance
 │   ├── logger.sh               # Enhanced logging system
 │   └── status-tracker.sh       # Cross-machine status tracking
-├── status/                     # Cross-machine status summaries (synced)
-│   ├── README.md               # Status system documentation
-│   └── {hostname}.json         # Status file per machine
 ├── logs/                       # Local operational logs (excluded)
+├── status/                     # Machine status tracking (local only)
 └── ide/                        # Session metadata (included)
 ```
 
@@ -105,10 +105,10 @@ GitHub Repo:
 - **Recent logs**: `./scripts/logger.sh show sync 20`
 - **System service**: `journalctl --user -u claude-memory-sync -f`
 
-### Cross-Machine Status (Synced)  
-- **All machines**: `./scripts/status-tracker.sh list`
-- **This machine**: `cat status/$(hostname).json`
-- **Status directory**: `status/` contains JSON summaries for each machine
+### Machine Status (Local Only)  
+- **This machine**: `./scripts/status-tracker.sh list`
+- **Status file**: `cat status/$(hostname).json`
+- **Note**: Status files are machine-local and not synced to prevent git conflicts
 
 ## Troubleshooting
 
@@ -123,8 +123,8 @@ journalctl --user -u claude-memory-sync -f
 
 ### Sync failures
 ```bash
-# Check sync log
-tail -f ~/.claude/sync.log
+# Check recent sync logs
+./scripts/logger.sh show sync 20
 
 # Manual sync to test
 ./scripts/sync-memory.sh
@@ -132,7 +132,7 @@ tail -f ~/.claude/sync.log
 
 ### Machine branch conflicts
 Machine branches avoid conflicts by design. If issues occur:
-1. Check `sync.log` for sync errors on the specific machine
+1. Check sync logs: `./scripts/logger.sh show sync 20`
 2. Use `./scripts/merge-to-main.sh list` to see branch status
 3. Merge branches manually: `./scripts/merge-to-main.sh interactive`
 

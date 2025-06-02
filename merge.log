@@ -1,0 +1,114 @@
+[2025-06-02 13:50:41] MERGE: Starting merge operation
+
+[0;34m=== Available Machine Branches ===[0m
+[2025-06-02 13:50:42] MERGE: Merge operation completed
+[2025-06-02 13:51:02] MERGE: Starting merge operation
+
+[0;34m=== Available Machine Branches ===[0m
+
+[0;34m=== Preview merge of [0;34m=== ===[0m
+[2025-06-02 13:51:22] MERGE: Starting merge operation
+
+[0;34m=== Available Machine Branches ===[0m
+
+[0;34m=== Auto-merge mode ===[0m
+
+[0;34m=== Merging [0;34m=== into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in [0;34m===
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged [0;34m===
+
+[0;34m=== Merging Available into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in Available
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged Available
+
+[0;34m=== Merging Machine into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in Machine
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged Machine
+
+[0;34m=== Merging Branches into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in Branches
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged Branches
+
+[0;34m=== Merging ===[0m into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in ===[0m
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged ===[0m
+
+[0;34m=== Merging Machine into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in Machine
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged Machine
+
+[0;34m=== Merging branches into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in branches
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged branches
+
+[0;34m=== Merging with into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in with
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged with
+
+[0;34m=== Merging last into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in last
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged last
+
+[0;34m=== Merging activity: into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in activity:
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged activity:
+
+[0;34m=== Merging machine-pop-os into main ===[0m
+[0;32m[INFO][0m ✓ machine-pop-os merged successfully
+[0;32m[INFO][0m ✓ Auto-merged machine-pop-os
+
+[0;34m=== Merging 54 into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in 54
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged 54
+
+[0;34m=== Merging seconds into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in seconds
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged seconds
+
+[0;34m=== Merging ago into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in ago
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged ago
+
+[0;34m=== Merging by into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in by
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged by
+
+[0;34m=== Merging petecog into main ===[0m
+[1;33m[WARN][0m Merge conflicts detected in petecog
+[0;32m[INFO][0m Attempting auto-resolution...
+[0;32m[INFO][0m ✓ All conflicts auto-resolved
+[0;32m[INFO][0m ✓ Auto-merged petecog
+
+[0;34m=== Merging machine-pop-os into main ===[0m
+[0;32m[INFO][0m ✓ machine-pop-os merged successfully
+[0;32m[INFO][0m ✓ Auto-merged machine-pop-os
+[0;32m[INFO][0m Pushing merged main branch...
+[2025-06-02 13:51:54] MERGE: Merge operation completed

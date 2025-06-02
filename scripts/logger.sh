@@ -32,8 +32,8 @@ log_message() {
     # Structured log entry
     echo "[$timestamp] [$level] [$component@$machine] $message" >> "$log_file"
     
-    # Also output to stdout for immediate feedback
-    echo "[$level] $message"
+    # Also output to stderr for immediate feedback (so it doesn't interfere with return values)
+    echo "[$level] $message" >&2
 }
 
 # Logging level functions

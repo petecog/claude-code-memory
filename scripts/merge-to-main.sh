@@ -58,7 +58,8 @@ list_machine_branches() {
         printf "  %-20s %s\n" "$branch" "$last_commit"
     done
     
-    echo "$branches"
+    # Return branches as newline-separated for proper parsing
+    echo "$branches" | tr ' ' '\n'
 }
 
 # Function to preview merge conflicts
@@ -191,7 +192,8 @@ interactive_merge() {
     
     print_section "Interactive Merge Mode"
     
-    for branch in $branches; do
+    while IFS= read -r branch; do
+        [[ -z "$branch" ]] && continue
         echo
         print_status "Process branch: $branch"
         preview_merge "$branch"
@@ -226,7 +228,7 @@ interactive_merge() {
                 print_warning "Invalid choice, skipping $branch"
                 ;;
         esac
-    done
+    done <<< "$branches"
 }
 
 # Main function
@@ -241,21 +243,23 @@ main() {
             ;;
         "preview")
             branches=$(list_machine_branches)
-            for branch in $branches; do
+            while IFS= read -r branch; do
+                [[ -z "$branch" ]] && continue
                 preview_merge "$branch"
-            done
+            done <<< "$branches"
             ;;
         "auto")
             branches=$(list_machine_branches)
             print_section "Auto-merge mode"
-            for branch in $branches; do
+            while IFS= read -r branch; do
+                [[ -z "$branch" ]] && continue
                 if merge_branch "$branch" true; then
                     print_status "✓ Auto-merged $branch"
                 else
                     print_error "Failed to auto-merge $branch"
                     exit 1
                 fi
-            done
+            done <<< "$branches"
             print_status "Pushing merged main branch..."
             git push origin main
             ;;

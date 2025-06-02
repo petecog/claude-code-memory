@@ -30,6 +30,11 @@ cd ~/.claude
 # Manual sync (if needed)
 ./scripts/sync-memory.sh
 
+# Merge machine branches to main
+./scripts/merge-to-main.sh list        # List all machine branches
+./scripts/merge-to-main.sh auto        # Auto-merge all branches  
+./scripts/merge-to-main.sh interactive # Interactive merge process
+
 # Uninstall auto-sync
 ./scripts/setup-auto-sync.sh uninstall
 ```
@@ -38,8 +43,9 @@ cd ~/.claude
 
 1. **Background Monitor**: Systemd service watches for Claude Code process
 2. **Exit Detection**: When Claude exits, sync is automatically triggered  
-3. **Git Sync**: Pull latest → commit changes → push to GitHub
-4. **Conflict Handling**: Smart rebase strategy with error logging
+3. **Machine-Branch Sync**: Each machine pushes to its own branch (machine-hostname)
+4. **Conflict-Free**: No merge conflicts in daily auto-sync
+5. **Manual Merge**: Periodic merge to main branch using assisted merge script
 
 ## What Gets Synced
 
@@ -55,6 +61,8 @@ cd ~/.claude
 - `todos/` - Session cache (transient)
 - `input/` - File sharing area (transient)
 - `scratch/` - Experimental work
+- `logs/` - Operational logs (local only)
+- `status/` - Machine status files (local only)
 
 ## Repository Structure
 
@@ -71,15 +79,36 @@ cd ~/.claude
 ├── scripts/                    # Automation
 │   ├── setup-auto-sync.sh      # Service deployment
 │   ├── monitor-and-sync.sh     # Process monitoring
-│   └── sync-memory.sh          # Git operations
+│   ├── sync-memory.sh          # Machine-branch sync
+│   ├── merge-to-main.sh        # Branch merge assistance
+│   ├── logger.sh               # Enhanced logging system
+│   └── status-tracker.sh       # Cross-machine status tracking
+├── logs/                       # Local operational logs (excluded)
+├── status/                     # Machine status tracking (local only)
 └── ide/                        # Session metadata (included)
 ```
 
-## Logs
+## Branch Structure
 
-- **Monitor activity**: `~/.claude/monitor.log`
-- **Sync operations**: `~/.claude/sync.log`  
+```
+GitHub Repo:
+├── main                        # Clean, manually curated branch
+├── machine-hostname1           # Auto-sync from machine 1
+├── machine-hostname2           # Auto-sync from machine 2  
+└── machine-hostname3           # Auto-sync from machine 3
+```
+
+## Logs and Status
+
+### Local Logs (Excluded from Git)
+- **Structured logs**: `logs/{component}/{component}-YYYY-MM.log`
+- **Recent logs**: `./scripts/logger.sh show sync 20`
 - **System service**: `journalctl --user -u claude-memory-sync -f`
+
+### Machine Status (Local Only)  
+- **This machine**: `./scripts/status-tracker.sh list`
+- **Status file**: `cat status/$(hostname).json`
+- **Note**: Status files are machine-local and not synced to prevent git conflicts
 
 ## Troubleshooting
 
@@ -94,18 +123,24 @@ journalctl --user -u claude-memory-sync -f
 
 ### Sync failures
 ```bash
-# Check sync log
-tail -f ~/.claude/sync.log
+# Check recent sync logs
+./scripts/logger.sh show sync 20
 
 # Manual sync to test
 ./scripts/sync-memory.sh
 ```
 
-### Git conflicts
-Auto-sync uses rebase strategy to handle conflicts. If sync fails:
-1. Check `sync.log` for details
-2. Resolve conflicts manually in the repo
-3. Service will retry on next Claude exit
+### Machine branch conflicts
+Machine branches avoid conflicts by design. If issues occur:
+1. Check sync logs: `./scripts/logger.sh show sync 20`
+2. Use `./scripts/merge-to-main.sh list` to see branch status
+3. Merge branches manually: `./scripts/merge-to-main.sh interactive`
+
+### Merge conflicts in main
+When merging machine branches to main:
+1. Use `./scripts/merge-to-main.sh preview` to see conflicts
+2. Auto-resolve with `./scripts/merge-to-main.sh auto` 
+3. Or use interactive mode for manual control
 
 ## Requirements
 

@@ -8,12 +8,20 @@ set -e
 CLAUDE_DIR="/home/peter/.claude"
 SYNC_SCRIPT="$CLAUDE_DIR/scripts/sync-memory.sh"
 FLAG_FILE="/tmp/claude-was-running-$(whoami)"
-LOG_FILE="$CLAUDE_DIR/monitor.log"
+LOGGER="$CLAUDE_DIR/scripts/logger.sh"
 
-# Function to log with timestamp
-log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] MONITOR: $1" | tee -a "$LOG_FILE"
-}
+# Source logging functions
+if [[ -f "$LOGGER" ]]; then
+    source "$LOGGER"
+    MONITOR_LOG=$(get_log_file "monitor")
+else
+    # Fallback logging
+    MONITOR_LOG="$CLAUDE_DIR/monitor.log"
+    log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] MONITOR: $1" | tee -a "$MONITOR_LOG"; }
+    log_info() { log "$2"; }
+    log_warn() { log "$2"; }
+    log_error() { log "$2"; }
+fi
 
 # Function to check if Claude is running
 claude_running() {
@@ -22,28 +30,28 @@ claude_running() {
 
 # Function to sync memory safely
 trigger_sync() {
-    log "Claude session ended, triggering sync..."
+    log_info "monitor" "Claude session ended, triggering sync" "$MONITOR_LOG"
     
     if [[ -x "$SYNC_SCRIPT" ]]; then
         if "$SYNC_SCRIPT"; then
-            log "Sync completed successfully"
+            log_success "monitor" "Sync completed successfully" "$MONITOR_LOG"
         else
-            log "ERROR: Sync failed"
+            log_error "monitor" "Sync failed" "$MONITOR_LOG"
         fi
     else
-        log "ERROR: Sync script not found or not executable: $SYNC_SCRIPT"
+        log_error "monitor" "Sync script not found or not executable: $SYNC_SCRIPT" "$MONITOR_LOG"
     fi
 }
 
 # Main monitoring loop
 monitor_claude() {
-    log "Starting Claude memory monitor..."
+    log_info "monitor" "Starting Claude memory monitor" "$MONITOR_LOG"
     
     while true; do
         if claude_running; then
             # Claude is running
             if [[ ! -f "$FLAG_FILE" ]]; then
-                log "Claude started"
+                log_info "monitor" "Claude started" "$MONITOR_LOG"
                 touch "$FLAG_FILE"
             fi
             
@@ -66,7 +74,7 @@ monitor_claude() {
 
 # Cleanup function for graceful shutdown
 cleanup() {
-    log "Monitor stopping..."
+    log_info "monitor" "Monitor stopping" "$MONITOR_LOG"
     [[ -f "$FLAG_FILE" ]] && rm "$FLAG_FILE"
     exit 0
 }

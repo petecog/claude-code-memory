@@ -52,3 +52,17 @@
 - **Auto-resolution rules**: File-type specific strategies (memory files, decisions, logs, IDE files)
 - **Manual control**: Interactive mode for complex conflicts
 - **Date**: 2025-02-06
+
+## Enhanced Logging System
+- **Decision**: Exclude operational logs from git, sync status summaries only
+- **Rationale**: Eliminate log-based conflicts while maintaining cross-machine visibility
+- **Implementation**: Local logs in `logs/` (excluded), status summaries in `status/` (synced)
+- **Benefits**: Clean repository, debugging capability, cross-machine awareness
+- **Date**: 2025-02-06
+
+## Status Tracking Architecture
+- **Decision**: Simple JSON status files without complex dependencies
+- **Structure**: Per-machine status files with sync metrics and machine info
+- **Location**: Root-level `status/` directory for easy access
+- **Content**: Last sync time, operation status, file counts, machine metadata
+- **Date**: 2025-02-06

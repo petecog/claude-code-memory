@@ -80,3 +80,37 @@ Implemented automated Claude memory management system with GitHub sync and proce
 - **Script functionality** validated across all operation modes
 - **Documentation updated** with complete workflow and troubleshooting
 - **Error handling** implemented for edge cases and failure scenarios
+
+## Enhanced Logging and Status System
+
+### Logging Architecture Evolution
+- **Problem**: Operational logs in git caused merge conflicts and repository clutter
+- **Solution**: Exclude all logs from git, implement cross-machine status tracking
+- **Implementation**: Structured local logging with synced status summaries
+
+### Local Logging System
+- **Structured format**: `[timestamp] [level] [component@machine] message`
+- **Component separation**: `sync/`, `merge/`, `monitor/` log directories  
+- **Monthly rotation**: Logs organized as `component-YYYY-MM.log`
+- **Auto-cleanup**: Compression after 30 days, deletion after 90 days
+- **Fallback support**: Works without advanced dependencies
+
+### Cross-Machine Status Tracking
+- **Status summaries**: JSON files in `status/` directory (synced)
+- **Per-machine tracking**: Each machine maintains its own status file
+- **Key metrics**: Last sync time, operation status, file change counts, sync totals
+- **Machine metadata**: Hostname, user, OS, last seen timestamp
+- **Simple format**: No external dependencies, works without jq
+
+### Benefits Realized
+- **Conflict elimination**: No more log-based merge conflicts
+- **Cross-machine visibility**: See sync activity from all machines
+- **Clean repository**: Only essential status data synced
+- **Enhanced debugging**: Structured local logs for troubleshooting
+- **Usage insights**: Track sync patterns and system health
+
+### System Integration
+- **Automatic updates**: All scripts update status on completion
+- **Error tracking**: Failed operations logged with context
+- **Status commands**: Simple CLI for viewing machine status
+- **Documentation**: Clear usage examples and troubleshooting guides

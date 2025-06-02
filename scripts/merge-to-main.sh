@@ -6,7 +6,17 @@
 set -e
 
 CLAUDE_DIR="/home/peter/.claude"
-LOG_FILE="$CLAUDE_DIR/merge.log"
+LOGGER="$CLAUDE_DIR/scripts/logger.sh"
+
+# Source logging functions
+if [[ -f "$LOGGER" ]]; then
+    source "$LOGGER"
+    MERGE_LOG=$(get_log_file "merge")
+else
+    # Fallback logging
+    MERGE_LOG="$CLAUDE_DIR/merge.log"
+    log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] MERGE: $1" >> "$MERGE_LOG"; }
+fi
 
 # Colors for output
 RED='\033[0;31m'
@@ -15,26 +25,25 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Function to print colored output
+# Function to print colored output with logging
 print_status() {
-    echo -e "${GREEN}[INFO]${NC} $1" | tee -a "$LOG_FILE"
+    echo -e "${GREEN}[INFO]${NC} $1"
+    log_info "merge" "$1" "$MERGE_LOG"
 }
 
 print_warning() {
-    echo -e "${YELLOW}[WARN]${NC} $1" | tee -a "$LOG_FILE"
+    echo -e "${YELLOW}[WARN]${NC} $1"
+    log_warn "merge" "$1" "$MERGE_LOG"
 }
 
 print_error() {
-    echo -e "${RED}[ERROR]${NC} $1" | tee -a "$LOG_FILE"
+    echo -e "${RED}[ERROR]${NC} $1"
+    log_error "merge" "$1" "$MERGE_LOG"
 }
 
 print_section() {
-    echo -e "\n${BLUE}=== $1 ===${NC}" | tee -a "$LOG_FILE"
-}
-
-# Function to log with timestamp
-log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] MERGE: $1" >> "$LOG_FILE"
+    echo -e "\n${BLUE}=== $1 ===${NC}"
+    log_info "merge" "=== $1 ===" "$MERGE_LOG"
 }
 
 # Function to list machine branches
@@ -235,7 +244,7 @@ interactive_merge() {
 main() {
     cd "$CLAUDE_DIR"
     
-    log "Starting merge operation"
+    log_info "merge" "Starting merge operation" "$MERGE_LOG"
     
     case "${1:-interactive}" in
         "list")
@@ -284,7 +293,7 @@ main() {
             ;;
     esac
     
-    log "Merge operation completed"
+    log_info "merge" "Merge operation completed" "$MERGE_LOG"
 }
 
 # Run if called directly

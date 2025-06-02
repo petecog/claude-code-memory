@@ -42,4 +42,7 @@ credentials.*
 secrets.*
 .env
 .env.*
-monitor.log
+
+# All log files - keep operational logs local to each machine
+*.log
+logs/

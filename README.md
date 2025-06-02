@@ -78,7 +78,13 @@ cd ~/.claude
 │   ├── setup-auto-sync.sh      # Service deployment
 │   ├── monitor-and-sync.sh     # Process monitoring
 │   ├── sync-memory.sh          # Machine-branch sync
-│   └── merge-to-main.sh        # Branch merge assistance
+│   ├── merge-to-main.sh        # Branch merge assistance
+│   ├── logger.sh               # Enhanced logging system
+│   └── status-tracker.sh       # Cross-machine status tracking
+├── status/                     # Cross-machine status summaries (synced)
+│   ├── README.md               # Status system documentation
+│   └── {hostname}.json         # Status file per machine
+├── logs/                       # Local operational logs (excluded)
 └── ide/                        # Session metadata (included)
 ```
 
@@ -92,12 +98,17 @@ GitHub Repo:
 └── machine-hostname3           # Auto-sync from machine 3
 ```
 
-## Logs
+## Logs and Status
 
-- **Monitor activity**: `~/.claude/monitor.log`
-- **Sync operations**: `~/.claude/sync.log`  
-- **Merge operations**: `~/.claude/merge.log`
+### Local Logs (Excluded from Git)
+- **Structured logs**: `logs/{component}/{component}-YYYY-MM.log`
+- **Recent logs**: `./scripts/logger.sh show sync 20`
 - **System service**: `journalctl --user -u claude-memory-sync -f`
+
+### Cross-Machine Status (Synced)  
+- **All machines**: `./scripts/status-tracker.sh list`
+- **This machine**: `cat status/$(hostname).json`
+- **Status directory**: `status/` contains JSON summaries for each machine
 
 ## Troubleshooting
 

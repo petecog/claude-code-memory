@@ -27,3 +27,14 @@
 ## Memory Strategy
 - **Decision**: Store decisions and summaries in project repos, not raw conversation logs
 - **Rationale**: Distilled knowledge is portable, raw logs are working data
+
+## Automation Implementation
+- **Decision**: Use systemd user service with process monitoring for auto-sync
+- **Rationale**: Most reliable approach - no Claude Code integration available, systemd handles lifecycle properly
+- **Date**: 2025-02-06
+
+## Final Architecture
+- **Decision**: Self-contained automation with portable deployment script
+- **Implementation**: Monitor script detects Claude exit → triggers git sync → logs to files
+- **Benefits**: Zero-maintenance, cross-machine portable, privacy-conscious
+- **Date**: 2025-02-06

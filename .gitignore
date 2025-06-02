@@ -42,3 +42,4 @@ credentials.*
 secrets.*
 .env
 .env.*
+monitor.log

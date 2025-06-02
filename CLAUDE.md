@@ -48,6 +48,6 @@
 - **Required subdirectories**:
   - `/.claude` - Local, repo specific memory, contains the following
     - `/input` - For sharing files with Claude (user input area)
-    - `/memory` - Session-by-session work summaries (yyyyddmm-descriptive-name.md format)
+    - `/memory` - Session-by-session summaries of work done, so claude can re-trace steps if needed (yyyyddmm-descriptive-name.md format)
     - `decisions.md` - Key design/implementation decisions record
     - `/scratch` - Experimental work and things to revisit later (organized in folders)

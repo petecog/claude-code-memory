@@ -38,3 +38,17 @@
 - **Implementation**: Monitor script detects Claude exit → triggers git sync → logs to files
 - **Benefits**: Zero-maintenance, cross-machine portable, privacy-conscious
 - **Date**: 2025-02-06
+
+## Conflict Resolution Strategy
+- **Decision**: Machine-specific branches with assisted merge to main
+- **Rationale**: Eliminates daily sync conflicts while maintaining clean main branch
+- **Implementation**: Each machine pushes to `machine-hostname` branch, periodic merge via script
+- **Benefits**: Zero conflicts in auto-sync, complete change history, manual merge control
+- **Date**: 2025-02-06
+
+## Merge Automation Features
+- **Decision**: Multi-mode merge script with smart conflict resolution
+- **Modes**: List, preview, auto-merge, interactive
+- **Auto-resolution rules**: File-type specific strategies (memory files, decisions, logs, IDE files)
+- **Manual control**: Interactive mode for complex conflicts
+- **Date**: 2025-02-06

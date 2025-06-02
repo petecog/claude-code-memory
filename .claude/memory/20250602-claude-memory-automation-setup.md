@@ -49,5 +49,34 @@ Implemented automated Claude memory management system with GitHub sync and proce
 1. **Cross-machine portability** - Clone repo + run setup script
 2. **Zero-maintenance** - Automatic sync on Claude exit
 3. **Privacy-conscious** - Excludes sensitive conversation logs
-4. **Conflict-resistant** - Smart sync strategy with error handling
+4. **Conflict-free operations** - Machine branches eliminate sync conflicts
 5. **Self-contained** - No external dependencies beyond git/systemd
+6. **Assisted merging** - Smart conflict resolution with multiple merge modes
+
+## Advanced Features Added
+
+### Machine-Branch Architecture
+- **Conflict Prevention**: Each machine syncs to dedicated branch (`machine-hostname`)
+- **Clean History**: Main branch remains clean, machine branches preserve full history
+- **Zero Conflicts**: Daily auto-sync never encounters merge conflicts
+
+### Merge Assistance System
+- **merge-to-main.sh script** with four operation modes:
+  - `list` - Display all machine branches with activity timestamps
+  - `preview` - Show potential merge conflicts before proceeding
+  - `auto` - Automated merge with smart conflict resolution
+  - `interactive` - Guided merge process with user decisions
+
+### Smart Conflict Resolution
+- **File-type specific strategies**:
+  - Memory files: Preserve both versions with machine identification
+  - Decisions.md: Append entries from all machines
+  - Log files: Choose appropriate version based on recency
+  - IDE files: Take newer version (session metadata)
+- **Fallback to manual**: Complex conflicts still get human review
+
+### Testing and Validation
+- **Workflow tested** with actual machine branch creation and merge
+- **Script functionality** validated across all operation modes
+- **Documentation updated** with complete workflow and troubleshooting
+- **Error handling** implemented for edge cases and failure scenarios

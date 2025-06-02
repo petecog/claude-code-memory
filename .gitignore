@@ -46,3 +46,6 @@ secrets.*
 # All log files - keep operational logs local to each machine
 *.log
 logs/
+
+# Machine status files - keep local to each machine
+status/

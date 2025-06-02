@@ -1,0 +1,44 @@
+# Claude Code System Directories (exclude all - contain sensitive data)
+projects/
+statsig/
+todos/
+input/
+scratch/
+
+# Conversation logs containing potentially sensitive information
+*.jsonl
+
+# Track global Claude memory files
+# CLAUDE.md - global preferences
+# .claude/ - memory structure for this instance
+
+# Local scratch/temp files within our structure
+.claude/scratch/
+temp/
+*.tmp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Any potential credential files
+*.key
+*.pem
+*.p12
+*.pfx
+credentials.*
+secrets.*
+.env
+.env.*

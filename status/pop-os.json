@@ -1,14 +1,14 @@
 {
   "machine": "pop-os",
-  "last_sync": "2025-06-02T14:08:39+01:00",
-  "last_operation": "test",
+  "last_sync": "2025-06-02T14:19:33+01:00",
+  "last_operation": "sync-memory",
   "last_status": "success",
-  "last_changes": ["scripts/status-tracker.sh"],
-  "sync_count": 2,
+  "last_changes": [""],
+  "sync_count": 3,
   "machine_info": {
     "hostname": "pop-os",
     "user": "peter",
     "os": "Linux",
-    "last_seen": "2025-06-02T14:08:39+01:00"
+    "last_seen": "2025-06-02T14:19:33+01:00"
   }
 }

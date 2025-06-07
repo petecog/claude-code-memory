@@ -49,3 +49,4 @@ logs/
 
 # Machine status files - keep local to each machine
 status/
+ide/*.lock
